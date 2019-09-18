@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<string.h>
+#include<process.h>
+#include<conio.h>
+#define N 30
+
+typedef struct student   /*结构体*/
+{	char number[10];  /*存学号*/
+	char name[20];    /*存姓名*/
+	int china;
+	int math;
+	int english;
+}STU;
+STU stu[N];		/*声明结构体数组，STU相当于int那样使用*/
+int n;
+
+void inputscore();	/*先声明，因该子函数在主函数后面*/
+void lookscore();
+void searchscore();
+void menu();
+void exit();
+
+int main()
+{	short int flag=0;
+	menu();
+	do
+	{	flag=1;		/*标记为1时循环*/
+		switch(getch())
+		{	case '1' : inputscore();break;  /*登记成绩*/
+			case '2' : lookscore();break;	/*查看成绩*/
+			case '3' : searchscore();break;	/*查找成绩*/
+			case '0' : exit();break;		/*退出程序*/
+			default :  printf("输入有误\n");
+		}
+		printf("按任意键继续\n");
+		getch();  /*接收键盘敲入的字符一个，避免下次被误接收*/
+		menu();
+	}while (flag==1);
+}
+
+void menu()  /* 菜单 */
+{
+	//system("cls");					/*清屏*/
+	printf("\n");
+	printf("***********欢迎进入学生成绩管理系统***********\n");
+	printf("                    菜 单                     \n");
+	printf(" 输入成绩 ---------------------------------- 1\n");
+	printf(" 查看成绩 ---------------------------------- 2\n");
+	printf(" 查询学生成绩------------------------------- 3\n");
+	printf(" 退出系统 ---------------------------------- 0\n");
+	printf("**********************************************\n");
+	printf("请输入您的选择\n");
+}
+
+void inputscore()  /* 输入学生信息 */
+{	int i;	
+//	system("cls");
+	printf("请输入学生总数，例如1，然后回车确认：\n");
+	scanf("%d",&n);
+	printf("#提示：学号由1位大写字母和3位数字组成的，如P101\n");	/*因二维表上下需对正故有此要求*/
+	for(i=0;i<n;i++)
+	{	printf("请输入学生%d的 学号 姓名 语文 数学 英语(二者之间用空格间隔):\n",i+1);
+		scanf("%s%s%d%d%d",stu[i].number,stu[i].name,stu[i].china,stu[i].math,stu[i].english);
+	}
+	printf("成功输入\n");
+}
+
+
+void lookscore()  /* 查看学生成绩 */
+{
+	int i;
+	printf("学号\t姓名\t语文\t数学\t英语\n");
+	for(i=0;i<n;i++)
+	{ printf("%s\t%s\t%d\t%d\t%d\n",stu[i].number,stu[i].name,stu[i].china,stu[i].math,stu[i].english);
+	  printf("\n");
+	}
+}
+
+void searchscore()  /*查找学生成绩*/ 
+{
+	char abc[22];
+	int i;
+	printf("请输入学生的学号：");
+	scanf("%s",abc);
+	for(i=0;i<n;i++)
+	{
+            if (strcmp(abc,stu[i].name)==0)
+			{  
+                printf("您查找的联系人为：\n");  
+                printf("学号：%s\t姓名：%s\t语文：%d\t数学：%d\t英语：%d\n",stu[i].number,stu[i].name,stu[i].china,stu[i].math,stu[i].english);
+			}
+	}			
+}
+void exit()
+{
+	printf("退出系统。。。。"); 
+}
